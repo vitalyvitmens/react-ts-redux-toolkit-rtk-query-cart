@@ -1,26 +1,39 @@
 import { useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { round } from '../utils'
 import { createOrder } from '../redux/orderReducer'
+import { useGetProductsQuery } from '../redux/productsReducer'
+import { round } from '../utils'
 
 export function Total() {
-  const products = useAppSelector((state) => state.products)
-  const orderLoading = useAppSelector((state) => state.order.loading)
+  const { data: products } = useGetProductsQuery()
 
+  // Получаем состояние продуктов из хранилища один раз
+  const productState = useAppSelector((state) => state.products)
+
+  // Мемоизация вычислений для total
   const total = useMemo(() => {
-    const subtotal = products.reduce(
-      (acc, product) => acc + product.price * product.quantity,
-      0
-    )
+    if (!products) {
+      return {
+        subtotal: 0,
+        tax: 0,
+        total: 0,
+      }
+    }
+    const subtotal = products.reduce((acc, product) => {
+      return acc + product.price * (productState[product.id] || 0)
+    }, 0)
     const tax = subtotal * 0.13
+    const total = subtotal + tax
+
     return {
       subtotal: round(subtotal),
       tax: round(tax),
-      total: round(subtotal + tax),
+      total: round(total),
     }
-  }, [products])
+  }, [products, productState]) // Указываем зависимости для useMemo
 
   const dispatch = useAppDispatch()
+  const disableBuyButton = useAppSelector((state) => state.order.loading)
 
   return (
     <table className="bill">
@@ -41,7 +54,7 @@ export function Total() {
           <td colSpan={2} className="button-cell">
             <button
               className="main-button"
-              disabled={orderLoading}
+              disabled={disableBuyButton}
               onClick={() => dispatch(createOrder())}
             >
               Buy
