@@ -1,0 +1,296 @@
+@import url(https://fonts.googleapis.com/css?family=Mouse+Memoirs:400,700);
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font: 16px 'Mouse Memoirs';
+  background: #ad6932;
+  color: #523118;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  text-align: center;
+  padding: 1em 0 2em;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #5f391c,
+    #5f391c 100px,
+    #865127 100px,
+    #865127 200px
+  );
+  color: #f0dccd;
+  box-shadow: 0 0 0 0.5em rgba(255, 255, 255, 0.25) inset;
+}
+.header h1 {
+  font-size: 4em;
+}
+.header p {
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.cart-container {
+  width: 100%;
+  height: 280px;
+  display: table;
+}
+.cart-container .empty {
+  font-size: 3em;
+  width: 100%;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.cart {
+  list-style: none;
+  position: relative;
+  left: 0;
+  transform: translate3d(0, 0, 0);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+.cart .product {
+  position: relative;
+  width: 200px;
+  height: 280px;
+  float: left;
+}
+.cart .product:hover {
+  z-index: 1;
+}
+.cart .product:nth-child(3n + 1) .product-preview,
+.cart .product:nth-child(3n + 1) .product-interactions {
+  background: #e8b0af;
+}
+.cart .product:nth-child(3n + 2) .product-preview,
+.cart .product:nth-child(3n + 2) .product-interactions {
+  background: #fddac4;
+}
+.cart .product:nth-child(3n) .product-preview,
+.cart .product:nth-child(3n) .product-interactions {
+  background: #f1d5a5;
+}
+.cart .product .product-preview {
+  padding: 1em;
+  height: 280px;
+  position: relative;
+}
+.cart .product .product-preview .thumbnail {
+  width: 100%;
+  min-height: 120px;
+  max-height: 200px;
+}
+.cart .product .product-preview .thumbnail .image {
+  width: 100%;
+  margin-top: 1em;
+}
+.cart .product .product-preview .product-paper {
+  position: absolute;
+  height: 75px;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 1em;
+  display: block;
+  width: 100%;
+  margin-left: -1em;
+}
+.cart .product .product-preview .product-name {
+  font-size: 1.6em;
+  text-align: center;
+}
+.cart .product .product-preview .product-price {
+  text-align: center;
+  font-size: 1.2em;
+}
+.cart .product .product-quantity {
+  font-size: 2em;
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  padding: 0.35em 0;
+  border-radius: 1em;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  background: #fff;
+  transform: rotateZ(10deg);
+  backface-visibility: hidden;
+}
+.cart .product:hover .product-interactions,
+.cart .product .visible {
+  opacity: 1 !important;
+  transform: perspective(600px) rotateX(0deg) !important;
+}
+.cart .product .product-interactions {
+  position: absolute;
+  bottom: 75px;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.4);
+  transform-origin: 50% 100% 0;
+  transform: perspective(600px) rotateX(90deg);
+  opacity: 0;
+  transition: 0.4s all ease-in-out;
+  display: table;
+}
+.cart .product .product-interactions .button {
+  width: 50%;
+  height: 60px;
+  float: left;
+  text-align: center;
+  font-size: 5em;
+  line-height: 0.75em;
+  color: #999;
+  background: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  user-select: none;
+  transition: 0.1s all ease-in-out;
+  transform-origin: 50% 0 0;
+  transform: perspective(600px);
+  z-index: 0;
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+}
+.cart .product .product-interactions .button.plus {
+  color: #7fb034;
+}
+.cart .product .product-interactions .button.minus {
+  color: #a0ce5a;
+}
+.cart .product .product-interactions .button:nth-child(1) {
+  border-right: 1px dashed rgba(0, 0, 0, 0.1);
+}
+.cart .product .product-interactions .button:active {
+  font-size: 7em;
+  background: #fff !important;
+  box-shadow: 0 0 0 10px #fff !important;
+  z-index: 10;
+  line-height: 0.45em;
+}
+.cart .product .product-interactions .button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.bill {
+  margin: 0;
+  padding: 1em;
+  font-size: 1.4em;
+  line-height: 1.6em;
+  background: #f1d5a5;
+  color: #48320b;
+  width: 100%;
+}
+.bill .total {
+  font-weight: bold;
+  font-size: 1.6em;
+}
+.bill tr td {
+  width: 50%;
+  padding: 0.25em 20px;
+}
+.bill tr .label {
+  text-align: right;
+}
+
+.bill .button-cell {
+  text-align: center;
+}
+
+/* CSS */
+.main-button {
+  appearance: button;
+  background-color: #8a5428;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: din-round, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.main-button:after {
+  background-clip: padding-box;
+  background-color: #ac6932;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.main-button:main,
+.main-button:focus {
+  user-select: auto;
+}
+
+.main-button:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.main-button:disabled {
+  cursor: auto;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(138, 84, 40, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  min-width: 300px;
+  min-height: 300px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 16px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.modal-content h2 {
+  font-size: 36px;
+}
