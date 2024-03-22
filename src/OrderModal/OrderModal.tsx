@@ -1,17 +1,19 @@
-import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { resetOrder } from '../redux/orderReducer'
+import { useCreateOrderMutation } from '../redux/orderReducer'
 
 export const OrderModal = () => {
-  const show = useAppSelector((state) => state.order.confirmed)
-  const dispatch = useAppDispatch()
-  if (!show) {
+  const [, { data, reset }] = useCreateOrderMutation({
+    fixedCacheKey: 'order',
+  })
+
+  if (!data?.success) {
     return null
   }
+
   return (
     <div className="modal">
       <div className="modal-content">
         <h2>Order confirmed</h2>
-        <div className="main-button" onClick={() => dispatch(resetOrder())}>
+        <div className="main-button" onClick={() => reset()}>
           Perfect!
         </div>
       </div>

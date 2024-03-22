@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { IProduct } from '../types/IProduct'
+import { orderApiSlice } from './orderReducer'
 
 const initialState: Record<IProduct['id'], number> = {}
 
@@ -23,6 +24,13 @@ export const productsSlice = createSlice({
         state[action.payload] = 0
       }
     },
+  },
+
+  extraReducers(builder) {
+    builder.addMatcher(
+      orderApiSlice.endpoints.createOrder.matchFulfilled,
+      () => initialState
+    )
   },
 })
 
